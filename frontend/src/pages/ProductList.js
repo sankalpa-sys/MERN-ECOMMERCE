@@ -6,6 +6,8 @@ import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Product from "../components/Product";
 
+// Filtering Page
+
 function ProductList() {
   const location = useLocation()
   const cat = location.pathname.split('/')[2]

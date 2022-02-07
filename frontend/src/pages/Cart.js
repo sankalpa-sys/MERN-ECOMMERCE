@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -7,11 +7,14 @@ import Navbar from "../components/Navbar";
 import StripeCheckout from "react-stripe-checkout";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
+import { emptyCart, removefromCart } from "../redux/cartRedux";
 
 const KEY = "pk_test_51KQ0ASC3LWJt31ivbFCE967KPZy7XaRXmXIDFrjevK0QiscEwYexNV1FakZAC25DbPuxTl2tV0Q7esfUPDDUKaTD00LsfGnSSN"
 
 
 function Cart() {
+
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const [stripeToken, setStripeToken] = useState(null);
   const cart = useSelector((state) => state.cart);
@@ -37,6 +40,14 @@ function Cart() {
 
    }, [stripeToken]);
 
+   const handleEmptyClick = () => {
+      dispatch(emptyCart())
+   }
+
+   
+
+   
+
   return (
     <div>
       <Navbar />
@@ -46,8 +57,8 @@ function Cart() {
         <h1 className="text-center text-4xl font-light  text-red-600 border-b font-mono">
           YOUR CART
         </h1>
-        <div className="flex flex-col md:flex-row mt-10 items-center space-y-4 md:justify-between mx-4">
-          <div className=" w-full md:w-1/2 pr-2">
+        <div className="flex flex-col   md:flex-row mt-10 items-center space-y-8 md:justify-between mx-4">
+          <div className=" w-full flex-grow   md:w-1/2 pr-2">
             <div className="my-10 flex w-full  justify-between space-x-4 text-sm md:text-base items-start">
               <Link to="/">
                 <button className="ml-4 mr-3 h-12 md:h-10 border-1 px-1  hover:text-red-800 hover:border-red-800 border-black bg-white">
@@ -56,9 +67,10 @@ function Cart() {
                     : "CONTINUE SHOPPING"}
                 </button>
               </Link>
-              <div className="flex justify-between items-center space-x-4">
-                <p className="underline">Shopping Cart({cart.quantity})</p>
-                <p className="underline">Your Wishlist(0)</p>
+              <div className="flex justify-between items-center space-x-4 px-6">
+                <p className="border-b-2 border-gray-700 cursor-pointer">Shopping Cart({cart.quantity})</p>
+                <p className="border-b-2 border-gray-700 cursor-pointer ">Your Wishlist(0)</p>
+                {cart.products.length === 0?"":(<p onClick={handleEmptyClick} className="border-b-2 border-gray-700 cursor-pointer text-gray-700 hover:text-gray-900">Empty Cart</p>)}
               </div>
             </div>
             <hr />
@@ -71,10 +83,10 @@ function Cart() {
               cart.products.map((c) => (
                 <div
                   key={c._id}
-                  className="mt-6 w-full flex justify-around items-center space-x-4 ml-4"
+                  className="mt-6 w-full px-4  flex justify-around items-center space-x-4 ml-4"
                 >
                   <img
-                    className="h-60 object-cover select-none w-60"
+                    className="h-60 object-cover select-none w-48 md:w-60"
                     src={c.img}
                     alt=""
                   />
@@ -99,11 +111,14 @@ function Cart() {
                       </h5>
                     </div>
                     <div className="flex flex-col space-y-6 mr-2">
+                      <div className="flex flex-col md:flex-row justify-between items-center space-y-3 space-x-3">
                       <input
                         type="number"
                         defaultValue={c.quantity}
-                        className="outline-none border-1 border-gray-400 w-20 h-10 p-2 rounded-lg"
+                        className="outline-none border-1 border-gray-400 w-20 h-8 p-2 rounded-lg"
                       />
+                      <button onClick={()=>dispatch(removefromCart(c))} className="h-8 w-20 bg-red-600  text-gray-200 p-1 rounded-lg mb-3 hover:scale-105 hover:bg-red-700 hover:text-gray-100 active:scale-90 transform transition duration-300 ease-out shadow-xl shadow-red-600/40">Remove</button>
+                      </div>
                       <p className="text-2xl text-yellow-700">
                         ${c.price * c.quantity}
                       </p>
@@ -114,8 +129,8 @@ function Cart() {
             )}
           </div>
 
-          <div className=" flex space-y-4 flex-col h-96 w-96 border rounded-lg bg-gray-200 border-gray-400 p-4">
-            <h1 className="mt-2 mb-4 text-center text-2xl font-light underline decoration-teal-700 pb-1">
+          <div hidden={cart.products.length===0} className=" flex space-y-4 flex-col h-96 w-96 border rounded-lg bg-gray-200 border-gray-400 p-4">
+            <h1 className="mt-2 mb-4 text-center text-2xl font-light  pb-1">
               ORDER SUMMARY
             </h1>
             <div className="flex justify-between">
@@ -148,7 +163,7 @@ function Cart() {
               token={onToken}
               stripeKey={KEY}
             >
-              <button className="bg-black text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
+              <button  className="bg-black text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
                 CHECKOUT NOW
               </button>
             </StripeCheckout>

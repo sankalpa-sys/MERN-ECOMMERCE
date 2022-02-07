@@ -9,6 +9,8 @@ import { addProduct } from "../redux/cartRedux";
 import { publicRequest } from "../requestMethods";
 import { useDispatch } from "react-redux";
 
+// Single Product Page
+
 function Product() {
   const location = useLocation()
   const id = location.pathname.split('/')[2]
@@ -22,6 +24,12 @@ function Product() {
 
 
   useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior : "smooth"
+      })
+    }
     const getProduct = async() => {
       try {
         const res = await publicRequest.get('products/find/' + id)
@@ -32,6 +40,7 @@ function Product() {
         console.log(err)
       }
     }
+    scrollToTop()
     getProduct()
     
   }, [id])
