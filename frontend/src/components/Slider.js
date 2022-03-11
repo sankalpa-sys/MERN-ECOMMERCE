@@ -12,24 +12,24 @@ function Slider() {
     <div className="carousel-inner">
       <div className="carousel-item active">
         
-        <img src="https://images.pexels.com/photos/887349/pexels-photo-887349.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2 " className="d-block h-[600px] w-100 opacity-80" alt="..."/>
-        <div className="carousel-caption d-none d-md-block shadow-lg">
-          <h5 className="text-white text-4xl font-bold font-serif">SUMMER SALE</h5>
-          <p className="text-white font-semibold text-lg font-serif">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
+        <img src="https://cdn.pixabay.com/photo/2015/12/08/10/38/online-shopping-1082727__480.jpg " className="d-block h-[500px] md:h-[650px] w-100 opacity-80" alt="..."/>
+        <div className="carousel-caption d-none d-md-block text-white cursor-default ">
+          <h5 className=" text-4xl font-bold font-Lora drop-shadow-xl animate-bounce">SUMMER SALE</h5>
+          <p className=" font-semibold text-lg font-Lora drop-shadow-xl">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
         </div>
       </div>
       <div className="carousel-item">
-      <img src="https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="d-block md:h-[600px] w-100 opacity-80" alt="..."/>
-        <div className="carousel-caption d-none d-md-block">
-          <h5 className="text-white text-4xl font-bold font-serif">AUTUMN COLLECTION</h5>
-          <p className="text-white font-semibold text-lg font-serif">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
+      <img src="https://wallpaperaccess.com/full/2593107.jpg" className="d-block h-[500px] md:h-[650px] w-100 opacity-80" alt="..."/>
+        <div className="carousel-caption text-black d-none d-md-block cursor-default">
+          <h5 className="text-4xl font-bold font-Lora drop-shadow-xl animate-bounce">AUTUMN COLLECTION</h5>
+          <p className=" font-semibold text-lg font-Lora drop-shadow-xl">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
         </div>
       </div>
       <div className="carousel-item">
-      <img src="https://images.pexels.com/photos/1269968/pexels-photo-1269968.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" className="d-block h-[600px] w-100 opacity-80" alt="..."/>
-        <div className="carousel-caption d-none d-md-block">
-          <h5 className="text-white text-4xl font-bold font-serif">LOUNGEWEAR LOVE</h5>
-          <p className="text-whitefont-semibold text-lg font-serif">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
+      <img src="https://cdn.pixabay.com/photo/2018/08/29/17/07/ecommerce-3640321__480.jpg" className="d-block h-[500px] md:h-[650px] w-100 opacity-80" alt="..."/>
+        <div className="carousel-caption text-black d-none cursor-default d-md-block">
+          <h5 className="text-4xl font-bold font-Lora drop-shadow-xl animate-bounce">LOUNGEWEAR LOVE</h5>
+          <p className="font-semibold text-lg font-Lora drop-shadow-xl">DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.</p>
         </div>
       </div>
     </div>

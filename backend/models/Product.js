@@ -7,6 +7,7 @@ const productSchema = new mongoose.Schema({
     categories: {type: Array},
     size: {type: String},
     color: {type: String },
+    inStock: {type: Boolean, default: true},
     price: {type: Number, required:true},
 },{timestamps: true})
 

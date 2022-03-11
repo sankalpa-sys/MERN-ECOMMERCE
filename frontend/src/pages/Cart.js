@@ -8,11 +8,13 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { emptyCart, removefromCart } from "../redux/cartRedux";
+import Alert from "../components/Alert";
+
 
 const KEY = "pk_test_51KQ0ASC3LWJt31ivbFCE967KPZy7XaRXmXIDFrjevK0QiscEwYexNV1FakZAC25DbPuxTl2tV0Q7esfUPDDUKaTD00LsfGnSSN"
 
 
-function Cart() {
+function Cart({alert, showAlert}) {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -42,9 +44,9 @@ function Cart() {
 
    const handleEmptyClick = () => {
       dispatch(emptyCart())
-   }
+      showAlert("Cart Emptied!!", "success", "success")
 
-   
+   }
 
    
 
@@ -52,6 +54,7 @@ function Cart() {
     <div>
       <Navbar />
       <Announcement />
+      <Alert alert={alert}/>
 
       <div className="w-full my-10">
         <h1 className="text-center text-4xl font-light  text-red-600 border-b font-mono">
@@ -95,15 +98,12 @@ function Cart() {
                       <h5 className="text-sm">
                         <b>Product:</b> {c.title}
                       </h5>
-                      <h5 className="text-sm">
-                        <b>ID:</b> {c._id}
-                      </h5>
                       {c.color === "" ? (
                         ""
                       ) : (
                         <h5 className="text-sm flex items-center space-x-2">
                           <b className="">COLOR:</b>{" "}
-                          <p className="first-letter:uppercase">{c.color}</p>
+                          {c.color === "white" || c.color === "black"?(<p className={`h-4 w-4 bg-${c.color} rounded-full`}></p>):(<p className={`h-4 w-4 bg-${c.color}-500 rounded-full`}></p>)}
                         </h5>
                       )}
                       <h5 className="flex items-center space-x-2 text-sm">
@@ -163,7 +163,7 @@ function Cart() {
               token={onToken}
               stripeKey={KEY}
             >
-              <button  className="bg-black text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
+              <button className="bg-black text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
                 CHECKOUT NOW
               </button>
             </StripeCheckout>

@@ -3,7 +3,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'Lora': ["Lora", 'serif'],
+        "Josephin": ["Josephin Sans", "sans-serif"]
+      }
+    },
   },
   plugins: [],
 }

@@ -1,4 +1,5 @@
 import React,{useState, useEffect} from 'react'
+import {shuffle} from 'lodash'
 
 import ProductItem from './ProductItem'
 import axios from 'axios'
@@ -21,6 +22,7 @@ useEffect(() => {
     getProducts()
 
 }, [])
+
 
 
 useEffect(() => {
@@ -48,10 +50,10 @@ useEffect(() => {
         <div className='flex flex-wrap items-center justify-center mt-6 space-x-4 space-y-4'>
             { cat
             ?
-            (filteredProducts.map((product)=> (
+            (filteredProducts.length ===0? (<h1 className='font-bold text-2xl font-mono my-20 text-red-600 animate-bounce drop-shadow-lg shadow-red-600'>NO PRODUCTS AVAILABLE</h1>):filteredProducts.map((product)=> (
                 <ProductItem key={product.id} img={product.img} id={product._id}/>
             ))):
-            (products.slice(0,8).map((product)=> (
+            (shuffle(products).slice(0,9).map((product)=> (
                 <ProductItem key={product.id} img={product.img} id={product._id}/>
             )))
             }

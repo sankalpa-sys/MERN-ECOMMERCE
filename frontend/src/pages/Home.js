@@ -1,4 +1,6 @@
 import React from 'react'
+import Alert from '../components/Alert'
+
 import Announcement from '../components/Announcement'
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
@@ -7,16 +9,18 @@ import Newsletter from '../components/Newsletter'
 import Product from '../components/Product'
 import Slider from '../components/Slider'
 
-function Home() {
+function Home({alert, showAlert}) {
     return (
         <div>
             
            <Navbar/>
+           
            <Announcement/>
+           <Alert alert={alert}/>
            <Slider/>
            <Categories/>
            <Product/>
-           <Newsletter/>
+           <Newsletter showAlert={showAlert}/>
            <Footer/>
         </div>
     )

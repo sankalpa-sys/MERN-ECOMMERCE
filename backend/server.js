@@ -8,6 +8,7 @@ const productRoute = require("./routes/product")
 const cartRoute = require("./routes/cart")
 const orderRoute = require("./routes/order")
 const stripeRoute = require("./routes/stripe")
+const newsletterRoute = require('./routes/newsletter')
 const app = express();
 app.use(express.json())
 const port = process.env.PORT || 8001
@@ -22,6 +23,7 @@ app.use("/api/products", productRoute)
 app.use("/api/cart",cartRoute)
 app.use("/api/orders",orderRoute)
 app.use('/api/checkout', stripeRoute)
+app.use('/api/newsletter', newsletterRoute)
 
 
 app.listen(port, ()=> {
