@@ -127,7 +127,7 @@ function Product({alert,showAlert}) {
             
             <div className="flex items-center space-x-2">
                     {shuffledColors.slice(0,5).map((c)=>(
-                     <p key={c.id} onClick={()=>setcolor(c.title)} className={`h-6 w-6 ${c.bg} cursor-pointer rounded-full`}>{color!=="white"?<CheckIcon className={c.title === color? "inline-flex text-white":"hidden"}/>:<CheckIcon className={c.title === color? "inline-flex text-black":"hidden"}/>} </p>
+                     <p key={c.id} onClick={()=>setcolor(c.title)} className={`h-6 w-6 ${c.bg} hover:scale-125 cursor-pointer rounded-full`}>{color!=="white"?<CheckIcon className={c.title === color? "inline-flex text-white":"hidden"}/>:<CheckIcon className={c.title === color? "inline-flex text-black":"hidden"}/>} </p>
                      
 
                     ))}
