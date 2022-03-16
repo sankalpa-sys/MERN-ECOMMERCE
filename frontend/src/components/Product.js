@@ -14,7 +14,6 @@ useEffect(() => {
         try{
             const res = await axios.get(cat? `http://localhost:8001/api/products?category=${cat}`:`http://localhost:8001/api/products`)
             setproducts(res.data)
-            console.log(res.data.color)
         }catch(err){
             console.log(err)
         }
@@ -47,17 +46,21 @@ useEffect(() => {
     }
 }, [sort])
     return (
+        <>
+        {cat?"":(<h1 className='font-bold text-2xl font-Lora ml-10 mt-4 text-yellow-600'>FOR YOU:</h1>)}
         <div className='flex flex-wrap items-center justify-center mt-6 space-x-4 space-y-4'>
-            { cat
-            ?
-            (filteredProducts.length ===0? (<h1 className='font-bold text-2xl font-mono my-20 text-red-600 animate-bounce drop-shadow-lg shadow-red-600'>NO PRODUCTS AVAILABLE</h1>):filteredProducts.map((product)=> (
-                <ProductItem key={product.id} img={product.img} id={product._id}/>
-            ))):
-            (shuffle(products).slice(0,9).map((product)=> (
-                <ProductItem key={product.id} img={product.img} id={product._id}/>
-            )))
-            }
-        </div>
+           
+           { cat
+           ?
+           (filteredProducts.length ===0? (<h1 className='font-bold text-2xl font-mono my-20 text-red-600 animate-bounce drop-shadow-lg shadow-red-600'>NO PRODUCTS AVAILABLE</h1>):filteredProducts.map((product)=> (
+               <ProductItem key={product.id} price={product.price} img={product.img} id={product._id}/>
+           ))):
+           (shuffle(products).slice(0,9).map((product)=> (
+               <ProductItem key={product.id} price={product.price} img={product.img} id={product._id}/>
+           )))
+           }
+       </div>
+        </>
     )
 }
 

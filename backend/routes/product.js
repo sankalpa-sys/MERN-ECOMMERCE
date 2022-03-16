@@ -60,7 +60,7 @@ router.get('/find/:id', async(req, res)=> {
         try{
             let products;
             if(qnew){
-                products =  await Product.find().sort({createdAt: -1}).limit(6)
+                products =  await Product.find().sort({createdAt: -1}).limit(8)
             }else if(qcategory){
                 products = await Product.find({categories: {$in: [qcategory]}})
             }else{

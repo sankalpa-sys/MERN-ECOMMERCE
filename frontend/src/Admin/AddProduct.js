@@ -87,7 +87,7 @@ function AddProduct() {
   return (
     <>
     <Alert/>
-    <div className="flex items-center space-x-4 bg-gradient-to-r from-teal-500 to-pink-500 text-white">
+    <div className="flex items-center space-x-4 bg-gradient-to-r from-gray-700 to-black text-white">
       <img
         className="h-screen"
         src="https://images.pexels.com/photos/6694705/pexels-photo-6694705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -185,7 +185,7 @@ function AddProduct() {
 
         <button
           type="submit"
-          className="bg-gradient-to-r  from-green-500 to-blue-500 h-10  rounded-full pr-1 w-20 ml-3 flex items-center justify-center mt-3 shadow-xl shadow-pink-500/50 active:scale-90 transform transition duration-300 ease-out"
+          className="bg-gradient-to-r  from-green-500 to-blue-500 h-10  rounded-full pr-1 w-20 ml-3 flex items-center justify-center mt-3 shadow-xl shadow-gray-500/50 hover:scale-105 active:scale-90 transform transition duration-300 ease-out"
         >
           Add
         </button>

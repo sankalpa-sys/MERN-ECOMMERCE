@@ -2,7 +2,7 @@ import { HeartIcon, SearchIcon, ShoppingCartIcon } from '@heroicons/react/outlin
 import React,{useState} from 'react'
 import {Link} from 'react-router-dom'
 
-function ProductItem({img, id}) {
+function ProductItem({img, id,price}) {
 
     const [bg, setbg] = useState("none")
     const [display, setdisplay] = useState("hidden")
@@ -24,7 +24,10 @@ function ProductItem({img, id}) {
               <Link to={`/product/${id}`}>
                 <SearchIcon className={`h-12 hover:text-white w-12 rounded-full bg-${bg} p-2 cursor-pointer hover:scale-105 duration-150 transform transition ease-out active:scale-90 duration-105 active:ease-out ` }/>
               </Link>
-                <HeartIcon className={`h-12 w-12 rounded-full bg-${bg} p-2 cursor-pointer hover:scale-105 duration-150 transform transition ease-out active:scale-90 duration-105 active:ease-out ` }/>
+                <HeartIcon className={`h-12 w-12 rounded-full bg-${bg} p-2 cursor-pointer hover:scale-105 duration-150 transform transition ease-out active:scale-90 duration-105 active:ease-out ` } />
+            </div>
+            <div className='absolute cursor-default select-none top-0 flex justify-center items-center right-0 m-2 rounded-full bg-red-600 h-8 w-16'>
+                <p className='text-white tex-sm font-Lora'>${price}</p>
             </div>
         </div>
     )

@@ -26,7 +26,7 @@ function EditProducts() {
 
   const location = useLocation();
   const path = location.pathname.split("/")[2];
-  console.log(imageToBeUploaded);
+
 
   useEffect(() => {
     const getProduct = async () => {

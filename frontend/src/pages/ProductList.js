@@ -17,9 +17,11 @@ function ProductList({showAlert, alert}) {
 
   const handleFilters = (e) => {
     const value = e.target.value
-    setfilters({
-      ...filters,
-     [ e.target.name ]: value
+    setfilters((prevData)=>{
+      return{
+        ...prevData,
+        [e.target.name]: value
+      }
     })
   }
 

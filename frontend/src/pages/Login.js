@@ -9,7 +9,7 @@ function Login() {
     const dispatch = useDispatch()
     const handleClick= (e) => {
         e.preventDefault()
-        login(dispatch, {username, password})
+        login(dispatch, {username:username, password:password})
     }
     return (
         <div className='w-full h-screen bg-no-repeat bg-cover bg-right  flex items-center pt-20 justify-center' style={{backgroundImage: 'url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")'}}>

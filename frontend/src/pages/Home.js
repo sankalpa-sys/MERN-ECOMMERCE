@@ -5,6 +5,7 @@ import Announcement from '../components/Announcement'
 import Categories from '../components/Categories'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import NewestArrivals from '../components/NewestArrivals'
 import Newsletter from '../components/Newsletter'
 import Product from '../components/Product'
 import Slider from '../components/Slider'
@@ -19,6 +20,7 @@ function Home({alert, showAlert}) {
            <Alert alert={alert}/>
            <Slider/>
            <Categories/>
+           <NewestArrivals/>
            <Product/>
            <Newsletter showAlert={showAlert}/>
            <Footer/>

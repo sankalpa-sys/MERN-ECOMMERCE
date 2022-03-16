@@ -45,6 +45,12 @@
         title: "orange",
         bg: "bg-orange-500"
     },
+    {
+        id:10,
+        title: "gray",
+        bg: "bg-gray-500"
+    }
+    
 ]
 
 export default colors

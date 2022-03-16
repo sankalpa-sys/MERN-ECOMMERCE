@@ -9,21 +9,24 @@ import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { emptyCart, removefromCart } from "../redux/cartRedux";
 import Alert from "../components/Alert";
+import { userRequest } from "../requestMethods";
 
 
 const KEY = "pk_test_51KQ0ASC3LWJt31ivbFCE967KPZy7XaRXmXIDFrjevK0QiscEwYexNV1FakZAC25DbPuxTl2tV0Q7esfUPDDUKaTD00LsfGnSSN"
 
 
 function Cart({alert, showAlert}) {
-
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [stripeToken, setStripeToken] = useState(null);
   const cart = useSelector((state) => state.cart);
+  const user = useSelector(state=>state.user)
+  const products = cart.products
   const onToken = (token) => {
     setStripeToken(token)
   }
   useEffect(() => {
+
     const makeRequest = async () => {
        try {
           const res =  await axios.post('http://localhost:8001/api/checkout/payment',
@@ -32,6 +35,11 @@ function Cart({alert, showAlert}) {
               amount: cart.total * 100,
           })
           console.log(res.data)
+            try {
+              await userRequest.post('/orders',{userId:user.currentUser._id,products: products, amount:res.data.amount/100, address:res.data.billing_details.address})
+            } catch (error) {
+              console.log(error);
+            }
          navigate('/success')
        } catch (err) {
            console.log(err)
@@ -41,6 +49,8 @@ function Cart({alert, showAlert}) {
     stripeToken && makeRequest()
 
    }, [stripeToken]);
+   console.log(products);
+   
 
    const handleEmptyClick = () => {
       dispatch(emptyCart())

@@ -30,6 +30,7 @@ function Navbar() {
       </div>
 
       <div className=" relative flex justify-between items-center space-x-4 mr-6">
+        {user &&(<img src={user.img?user.img:"https://images.pexels.com/photos/531880/pexels-photo-531880.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} className="rounded-full h-8 w-8 cursor-pointer " alt="" />)}
         {user !== null? (<p onClick={handleLogOutClick} className=" text-xs md:text-sm hover:text-cyan-700 cursor-pointer">LOG OUT</p>):
         (
           <>
