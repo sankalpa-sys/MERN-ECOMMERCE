@@ -12,16 +12,16 @@ export const categories = [
       cat: "men"
     },
     {
-      id: 3,
-      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "All Dresses",
-      cat: "dress"
-    },
-    {
       id: 4,
       img: "https://images.pexels.com/photos/1159670/pexels-photo-1159670.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       title: "Shoes",
       cat: "shoes"
+    },
+    {
+      id: 5,
+      img: "https://images.pexels.com/photos/9519535/pexels-photo-9519535.jpeg?auto=compress&cs=tinysrgb&w=800",
+      title: "Sports",
+      cat: "sports"
     },
   ];
 

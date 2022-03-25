@@ -15,7 +15,7 @@ function Navbar() {
   }
 
   return (
-    <div className="flex justify-between items-center w-full h-14 text-gray-700 shadow-xl bg-gray-200 sticky top-0 z-50  ">
+    <div className="flex justify-between items-center w-full h-14 text-gray-700 shadow-xl bg-gradient-to-r from-gray-200 to-gray-300 sticky top-0 z-50  ">
       <div className="flex justify-between items-center space-x-4 ml-4">
         <h5>EN</h5>
         <div className="flex h-7 items-center space-x-2 border shadow-sm w-full ">

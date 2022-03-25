@@ -20,7 +20,7 @@ function NewestArrivals() {
           <h1 className="font-bold text-2xl font-Lora ml-2 mb-2 text-yellow-600">
             NEWEST ARRIVALS:
           </h1>
-          <div className="flex  overflow-scroll scrollbar-hide items-center">
+          <div className="flex space-x-6 overflow-scroll scrollbar-hide items-center">
             {newProducts.map((product) => (
               <NewProductItem key={product._id} img={product.img} id={product._id} />
             ))}
@@ -28,7 +28,7 @@ function NewestArrivals() {
         </>
       ) : (
        <div className="flex justify-center items-center">
-           <h1 className="font-bold text-2xl animate-bounce">Loading...</h1>
+           <h1 className="font-bold text-2xl font-Lora text-red-600 animate-bounce">No Products</h1>
         </div>
       )}
     </div>

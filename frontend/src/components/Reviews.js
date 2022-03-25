@@ -17,7 +17,7 @@ function Reviews({ reviews }) {
         >
           <div className="flex items-center  h-full space-x-2">
             <img
-              className="h-12  w-12 rounded-full object-cover object-top"
+              className="h-12 select-none  w-12 rounded-full object-cover object-top"
               src={r.postedBy.img?r.postedBy.img:""}
               alt=""
             />

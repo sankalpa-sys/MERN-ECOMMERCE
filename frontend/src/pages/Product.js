@@ -33,6 +33,10 @@ function Product({ alert, showAlert }) {
   const [reviewInputValue, setreviewInputValue] = useState("");
   const [runUseEffect, setrunUseEffect] = useState(1);
   const [colorName, setcolorName] = useState("");
+  const [img, setimg] = useState("")
+  const [colorArr, setcolorArr] = useState([])
+  const [imgArr, setimgArr] = useState([])
+
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.currentUser._id);
@@ -74,6 +78,9 @@ function Product({ alert, showAlert }) {
         setproduct(res.data);
         setinStock(res.data.inStock);
         setcolor(res.data.color);
+        setimg(res.data.img)
+        setcolorArr(res.data.colorArr)
+        setimgArr(res.data.imgArr)
       } catch (err) {
         console.log(err);
       }
@@ -81,6 +88,31 @@ function Product({ alert, showAlert }) {
     scrollToTop();
     getProduct();
   }, [id]);
+  const imgColorArr = colorArr.map((color, index)=>{
+    return{
+        color: color,
+        image: imgArr[index]
+    }
+})
+
+console.log(color);
+useEffect(() => {
+
+  imgColorArr.map((d)=>{
+      if(d.color === color){
+          setimg(d.image)
+      }
+  })
+}, [color])
+
+
+useEffect(() => {
+imgColorArr.map((m)=>{
+   if(product.img === m.image){
+       setcolor(m.color)
+   }
+})
+}, [])
 
   const handleChange = (e) => {
     setquantity(e.target.value);
@@ -96,7 +128,7 @@ function Product({ alert, showAlert }) {
         showAlert("You have to Login first", "danger", "Failed");
         return;
       } else {
-        dispatch(addProduct({ ...product, quantity, color, size }));
+        dispatch(addProduct({ ...product, quantity, color, size,img }));
         setquantity(1);
         window.scrollTo({
           top: 0,
@@ -109,6 +141,9 @@ function Product({ alert, showAlert }) {
     }
   };
 
+
+  
+
   return (
     <div className="overflow-hidden">
       <Navbar />
@@ -117,7 +152,7 @@ function Product({ alert, showAlert }) {
       <div className="my-4 mx-4 w-full flex flex-col md:flex-row  justify-between mr-10 items-center bg-gray-200">
         <div className="md:h-[90vh] h-auto md:w-1/3 w-2/3">
           <img
-            src={product.img}
+            src={img}
             className="w-full  h-full object-contain md:object-cover "
             alt=""
           />
@@ -136,29 +171,9 @@ function Product({ alert, showAlert }) {
             </label>
 
             <div className=" flex-grow md:flex-grow-0 flex items-center space-x-2">
-              {shuffledColors.map((c) => (
-                <p
-                  onMouseEnter={() => setcolorName(c.title)}
-                  onMouseLeave={() => setcolorName("")}
-                  key={c.id}
-                  onClick={() => setcolor(c.title)}
-                  className={`h-6 w-6 ${c.bg}   cursor-pointer rounded-full`}
-                >
-                  {color !== "white" ? (
-                    <CheckIcon
-                      className={
-                        c.title === color ? "inline-flex text-white" : "hidden"
-                      }
-                    />
-                  ) : (
-                    <CheckIcon
-                      className={
-                        c.title === color ? "inline-flex text-black" : "hidden"
-                      }
-                    />
-                  )}{" "}
-                </p>
-              ))}
+            {colorArr.map((m)=>(
+                        <p onClick={()=>setcolor(m)}  key={m} style={{backgroundColor:m}} className={`h-6 rounded-full cursor-pointer  mx-4 w-6 `}> </p>
+                    ))}
             </div>
 
             <label className=" font-semibold" htmlFor="size">
@@ -268,7 +283,7 @@ function Product({ alert, showAlert }) {
           />
         </div>
         <button
-          className="border bg-gray-800 hover:bg-gray-900 text-white font-mono rounded-full p-2 mt-2"
+          className="border bg-gradient-to-r from-cyan-500 hover:from-teal-500 to-blue-500 hover:to-green-500 text-white font-mono rounded-full p-2 mt-2"
           type="submit"
         >
           Submit
