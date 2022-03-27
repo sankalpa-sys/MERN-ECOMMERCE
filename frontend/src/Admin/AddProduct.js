@@ -121,7 +121,7 @@ function AddProduct() {
         />
 
         <label className="ml-3 mt-2" htmlFor="img">
-          Image:
+          Default Image:
         </label>
         <input
           type="file"
@@ -154,7 +154,7 @@ function AddProduct() {
           <option value="l">L</option>
           <option value="xl">Xl</option>
         </select>
-        <label htmlFor="color">Color:</label>
+        <label htmlFor="color">Default Color:</label>
         <div name="color" id="color" className="flex items-center space-x-2">
                     {colors.map((c)=>(
                      <p key={c.id} onClick={()=>setcolor(c.title)} className={`h-6 hover:scale-125 w-6 ${c.bg} cursor-pointer rounded-full`}> {color!== "white"? <CheckIcon className={c.title === color? "inline-flex  text-center text-white ":"hidden"}/>:<CheckIcon className={c.title === color? "inline-flex  text-center text-black ":"hidden"}/>} </p>

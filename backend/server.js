@@ -12,11 +12,12 @@ const newsletterRoute = require('./routes/newsletter')
 const reviewRoute = require('./routes/reviews')
 const app = express();
 app.use(express.json())
+app.use(cors());
 const port = process.env.PORT || 8001
 
 mongoose.connect(process.env.MONGO_URL).then(console.log("Database Connected")).catch(err=>console.log(err))
 
-app.use(cors());
+
 
 app.use("/api/auth", authRoute)
 app.use("/api/users", userRoute)

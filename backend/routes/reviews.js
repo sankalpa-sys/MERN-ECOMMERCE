@@ -26,7 +26,7 @@ router.get('/',async(req, res)=>{
 router.get('/find/:id',async(req, res)=>{
    
     try{
-        const review = await Review.findById(req.params.id)
+        const review = await Review.findById(req.params.id).populate("postedBy", "_id")
         res.status(200).send(review)
     }catch(err){
         res.status(400).send(err)
@@ -57,16 +57,19 @@ router.put('/:id',verifyToken,async(req,res)=>{
 })
 
 router.delete('/:id',verifyToken,async(req,res)=>{
-    if (req.user.id === req.body.userId || req.user.isAdmin === true   ) {
-        try{
-            await Review.findByIdAndDelete(req.params.id)
-           res.status(200).send("Review Deleted!!")
-        }catch(err){
-            res.status(400).send(err)
+   const review = await Review.findById(req.params.id).populate("postedBy", "_id")
+   
+        if(req.user.id.toString() === review.postedBy._id.toString() || req.user.isAdmin === true){
+            try{
+                await Review.findByIdAndDelete(req.params.id)
+               res.status(200).send(review)
+            }catch(err){
+                res.status(400).send(err)
+            }
+        }else{
+            res.status(400).send("You are not authorized to perform the action.")
         }
-    }else{
-        res.status(400).send("Yo have no permission to perform the action")
-    }
+    
 })
 
 

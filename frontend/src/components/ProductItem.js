@@ -7,7 +7,7 @@ function ProductItem({img, id,price}) {
     const [bg, setbg] = useState("none")
     const [display, setdisplay] = useState("hidden")
     const handleHover = () => {
-        setbg("black")
+        setbg("gray-800")
         setdisplay("flex")
     }
     const handleLeave = () => {
@@ -16,10 +16,10 @@ function ProductItem({img, id,price}) {
     }
     
     return (
-        <div className='relative border-2 rounded-lg border-gray-300  top-0 left-0 flex justify-center items-center hover:bg-gray-300 transfor transition ease-out cursor-pointer' onMouseEnter={handleHover} onMouseLeave={handleLeave}>
-            <img src={img} alt=""  className='h-[400px] m-1 w-[300px] hover:opacity-30 select-none'/>
+        <div className='relative border-2 rounded-lg border-gray-300 group  top-0 left-0 flex justify-center items-center group transfor transition ease-out cursor-pointer' onMouseEnter={handleHover} onMouseLeave={handleLeave}>
+            <img src={img} alt=""  className='h-[400px] object-cover object-top bg-gray-300 transition-opacity delay-100 group-hover:opacity-30 m-1 w-[300px] select-none'/>
 
-            <div className={`absolute ${display} items-center justify-between space-x-4 text-gray-100`}>
+            <div className={`absolute ${display} transition  items-center justify-between space-x-4 text-gray-100`}>
                 <ShoppingCartIcon className={`h-12 w-12 rounded-full bg-${bg} p-2 cursor-pointer hover:scale-105 duration-150 transform transition ease-out active:scale-90 duration-105 active:ease-out ` } />
               <Link to={`/product/${id}`}>
                 <SearchIcon className={`h-12 hover:text-white w-12 rounded-full bg-${bg} p-2 cursor-pointer hover:scale-105 duration-150 transform transition ease-out active:scale-90 duration-105 active:ease-out ` }/>

@@ -49,8 +49,6 @@ function Cart({alert, showAlert}) {
     stripeToken && makeRequest()
 
    }, [stripeToken]);
-   console.log(products);
-   
 
    const handleEmptyClick = () => {
       dispatch(emptyCart())
@@ -66,7 +64,7 @@ function Cart({alert, showAlert}) {
       <Announcement />
       <Alert alert={alert}/>
 
-      <div className="w-full my-10">
+      <div className="w-full select-none bg-gray-200 pt-3">
         <h1 className="text-center text-4xl font-light  text-red-600 border-b font-mono">
           YOUR CART
         </h1>
@@ -99,7 +97,7 @@ function Cart({alert, showAlert}) {
                   className="mt-6 w-full px-4  flex justify-around items-center space-x-4 ml-4"
                 >
                   <img
-                    className="h-60 object-cover select-none w-48 md:w-60"
+                    className="h-60 object-cover object-top select-none w-48 md:w-60"
                     src={c.img}
                     alt=""
                   />
@@ -108,14 +106,10 @@ function Cart({alert, showAlert}) {
                       <h5 className="text-sm">
                         <b>Product:</b> {c.title}
                       </h5>
-                      {c.color === "" ? (
-                        ""
-                      ) : (
-                        <h5 className="text-sm flex items-center space-x-2">
+                      <h5 className="text-sm flex items-center space-x-2">
                           <b className="">COLOR:</b>{" "}
-                          {c.color === "white" || c.color === "black"?(<p className={`h-4 w-4 bg-${c.color} rounded-full`}></p>):(<p className={`h-4 w-4 bg-${c.color}-500 rounded-full`}></p>)}
-                        </h5>
-                      )}
+                          <p className={`w-4 h-4 rounded-full`} style={{backgroundColor: c.color}}></p>
+                          </h5>
                       <h5 className="flex items-center space-x-2 text-sm">
                         <b>SIZE:</b> <p className="uppercase">{c.size}</p>
                       </h5>
@@ -139,7 +133,7 @@ function Cart({alert, showAlert}) {
             )}
           </div>
 
-          <div hidden={cart.products.length===0} className=" flex space-y-4 flex-col h-96 w-96 border rounded-lg bg-gray-200 border-gray-400 p-4">
+          <div hidden={cart.products.length===0} className=" flex select-none space-y-4 flex-col h-96 w-96 border rounded-lg bg-gray-900 text-white border-gray-400 p-4">
             <h1 className="mt-2 mb-4 text-center text-2xl font-light  pb-1">
               ORDER SUMMARY
             </h1>
@@ -158,7 +152,7 @@ function Cart({alert, showAlert}) {
             </div>
             <div className="flex justify-between">
               <p className="text-2xl font-semibold">Total</p>
-              <p className="text-2xl text-left font-semibold text-yellow-600">
+              <p className="text-2xl text-left font-semibold text-yellow-500">
                 ${cart.total}
               </p>
             </div>
@@ -173,7 +167,7 @@ function Cart({alert, showAlert}) {
               token={onToken}
               stripeKey={KEY}
             >
-              <button className="bg-black text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
+              <button className="bg-gray-900 border-1 border-red-600 text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
                 CHECKOUT NOW
               </button>
             </StripeCheckout>

@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { SearchIcon, ShoppingCartIcon } from "@heroicons/react/outline";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/userSlice";
+import { publicRequest } from "../requestMethods";
 
 function Navbar() {
   const dispatch = useDispatch()
@@ -14,15 +15,37 @@ function Navbar() {
     navigate('/')
   }
 
+  const [inputValue, setinputValue] = useState("")
+  const [products, setproducts] = useState([])
+
+  useEffect(() => {
+    const getProducts = async() => {
+      const res = await publicRequest.get('/products')
+      setproducts(res.data)
+    }
+    getProducts()
+  }, [])
+
+  const filteredProducts = products.filter((m)=>{
+    return m.title.toLowerCase().includes(inputValue.toLowerCase())
+  })
+
+  console.log(filteredProducts);
+  
+
   return (
     <div className="flex justify-between items-center w-full h-14 text-gray-700 shadow-xl bg-gradient-to-r from-gray-200 to-gray-300 sticky top-0 z-50  ">
-      <div className="flex justify-between items-center space-x-4 ml-4">
+      <div className="flex  justify-between items-center space-x-4 ml-4">
         <h5>EN</h5>
-        <div className="flex h-7 items-center space-x-2 border shadow-sm w-full ">
-          <input type="text" className=" outline-none pl-2 w-full h-full"  />
+        <div className="flex h-8  w-96 items-center space-x-2 border shadow-sm ">
+          <input type="text" onChange={e=>setinputValue(e.target.value)} value={inputValue} className=" relative rounded-lg outline-none pl-2 w-full h-full"  />
           <SearchIcon className=" w-7 mr-2 h-7 cursor-pointer  p-1 " />
-         
         </div>
+      </div>
+      <div className={filteredProducts.length === 0 || inputValue === ""?"hidden":`absolute left-[50px] h-auto top-[50px] rounded-lg p-4 bg-gray-300 w-96 flex flex-col space-y-2 text-xs font-Lora`}>
+        {filteredProducts.slice(0,7).map((m)=>(
+          <Link to={`/product/${m._id}`}><p className="cursor-pointer">{m.title}</p></Link>
+        ))}
       </div>
 
       <div>

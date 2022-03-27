@@ -8,8 +8,6 @@ import { addProduct } from "../redux/cartRedux";
 import { publicRequest, userRequest } from "../requestMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckIcon } from "@heroicons/react/outline";
-import colors from "../colors";
-import { shuffle } from "lodash";
 import Alert from "../components/Alert";
 import { XIcon } from "@heroicons/react/solid";
 import Reviews from "../components/Reviews";
@@ -18,8 +16,9 @@ import Reviews from "../components/Reviews";
 
 function Product({ alert, showAlert }) {
 
-  const [shuffledColors, setshuffledColors] = useState([]);
+
   const user = useSelector((state) => state.user.currentUser);
+  
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -32,24 +31,34 @@ function Product({ alert, showAlert }) {
   const [reviews, setreviews] = useState([]);
   const [reviewInputValue, setreviewInputValue] = useState("");
   const [runUseEffect, setrunUseEffect] = useState(1);
-  const [colorName, setcolorName] = useState("");
+  const [categories, setcategories] = useState([])
+
   const [img, setimg] = useState("")
   const [colorArr, setcolorArr] = useState([])
   const [imgArr, setimgArr] = useState([])
 
 
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.user.currentUser._id);
+
+
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      await userRequest.post("/reviews", {
-        postedBy: userId,
-        productId: id,
-        review: reviewInputValue,
-      });
-      setrunUseEffect(runUseEffect + 1);
-      setreviewInputValue("");
+      if(user!==null){
+        await userRequest.post("/reviews", {
+          postedBy: user._id,
+          productId: id,
+          review: reviewInputValue,
+        });
+        setrunUseEffect(runUseEffect + 1);
+        setreviewInputValue("");
+      }else{
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+        showAlert("You have to Login first", "danger", "Failed");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +74,6 @@ function Product({ alert, showAlert }) {
   }, [runUseEffect]);
 
   useEffect(() => {
-    setshuffledColors(shuffle(colors));
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -81,6 +89,7 @@ function Product({ alert, showAlert }) {
         setimg(res.data.img)
         setcolorArr(res.data.colorArr)
         setimgArr(res.data.imgArr)
+        setcategories(res.data.categories)
       } catch (err) {
         console.log(err);
       }
@@ -95,7 +104,8 @@ function Product({ alert, showAlert }) {
     }
 })
 
-console.log(color);
+
+
 useEffect(() => {
 
   imgColorArr.map((d)=>{
@@ -150,13 +160,14 @@ imgColorArr.map((m)=>{
       <Announcement />
       <Alert alert={alert} />
       <div className="my-4 mx-4 w-full flex flex-col md:flex-row  justify-between mr-10 items-center bg-gray-200">
-        <div className="md:h-[90vh] h-auto md:w-1/3 w-2/3">
+        <div className=" w-[500px] h-[800px]">
           <img
             src={img}
-            className="w-full  h-full object-contain md:object-cover "
+            className={categories.includes("shoes")? "w-full h-full object-contain":"w-full h-full object-cover object-top"}
             alt=""
           />
         </div>
+        {/* w-full h-full object-cover object-top */}
 
         <div className="flex flex-col ml-10 justify-center items-start h-screen w-1/2 mr-20">
           <h1 className="text-4xl font-mono my-4 font-bold">{product.title}</h1>
@@ -170,10 +181,10 @@ imgColorArr.map((m)=>{
               Color:{" "}
             </label>
 
-            <div className=" flex-grow md:flex-grow-0 flex items-center space-x-2">
-            {colorArr.map((m)=>(
-                        <p onClick={()=>setcolor(m)}  key={m} style={{backgroundColor:m}} className={`h-6 rounded-full cursor-pointer  mx-4 w-6 `}> </p>
-                    ))}
+            <div className=" flex-grow md:flex-grow-0 flex items-center space-x-1">
+            {colorArr.length!==0?colorArr.map((m)=>(
+                        <p onMouseOver={()=>setcolor(m)}  key={m} style={{backgroundColor:m}} className={`h-6 rounded-full cursor-pointer  mx-4 w-6 `}> </p>
+                    )):(<p style={{backgroundColor:color}} className="h-6 rounded-full cursor-default w-6 mx-4"></p>)}
             </div>
 
             <label className=" font-semibold" htmlFor="size">
@@ -192,17 +203,7 @@ imgColorArr.map((m)=>{
               <option value={"xl"}>XL</option>
             </select>
           </div>
-          <div className="flex items-center  h-4 space-x-2">
-            {colorName !== "" && (
-              <p className="font-gray-500 text-xs font-Lora font-bold">
-                Select
-              </p>
-            )}
-            <p className="font-gray-500 text-xs font-Lora first-letter:uppercase">
-              {" "}
-              {colorName}
-            </p>
-          </div>
+          
 
           <div className="flex  items-center space-x-24 w-full ml-2 my-6">
             <div className="flex md:flex-row flex-col space-y-3 items-center space-x-3">
@@ -289,7 +290,7 @@ imgColorArr.map((m)=>{
           Submit
         </button>
       </form>
-      <Reviews reviews={reviews} />
+      <Reviews reviews={reviews} runUseEffect={runUseEffect} setrunUseEffect= {setrunUseEffect} />
       <Newsletter alert={alert} showAlert={showAlert} />
       <Footer />
     </div>
