@@ -1,4 +1,5 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import Alert from '../components/Alert'
 
 import Announcement from '../components/Announcement'
@@ -11,8 +12,9 @@ import Product from '../components/Product'
 import Slider from '../components/Slider'
 
 function Home({alert, showAlert}) {
+    const mode = useSelector(state=>state.theme.theme)
     return (
-        <div>
+        <div className={mode==="light"?"bg-gray-200":"bg-gray-800"}>
             
            <Navbar/>
            

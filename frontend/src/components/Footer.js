@@ -4,10 +4,12 @@ import {
   PhoneIcon,
 } from "@heroicons/react/solid";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Footer() {
+  const mode  = useSelector(state => state.theme.theme)
   return (
-    <div className="w-full bg-gray-200 flex flex-col md:flex-row items-center justify-between text-sm text-gray-800 px-2">
+    <div className={mode==="light"? "w-full bg-gray-200 border-2 border-gray-300 flex flex-col md:flex-row items-center justify-between text-sm text-gray-800 px-2":"w-full bg-gray-800 border-t flex flex-col text-white md:flex-row items-center justify-between text-sm  px-2"}>
       <div className=" w-full md:w-1/3 mx-3 ">
         <h1 className="mt-4 mb-2 text-lg font-bold">DOKAN.</h1>
         <p className="text-justify w-3/4">

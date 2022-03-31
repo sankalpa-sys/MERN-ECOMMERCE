@@ -14,10 +14,12 @@ import Reviews from "../components/Reviews";
 import StarRatings from "react-star-ratings";
 
 
+
 // Single Product Page
 
 function Product({ alert, showAlert }) {
   const user = useSelector((state) => state.user.currentUser);
+  const mode  = useSelector(state => state.theme.theme)
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -158,7 +160,6 @@ function Product({ alert, showAlert }) {
       setuserReview(res.data);
     };
     getReview();
-    console.log(userReview);
   }, [runUseEffect]);
 
 
@@ -166,11 +167,11 @@ function Product({ alert, showAlert }) {
 
   
   return (
-    <div className="overflow-hidden">
+    <div className={mode==="light"?"bg-gray-200 overflow-hidden":"bg-gray-800 overflow-hidden"}>
       <Navbar />
       <Announcement />
 
-      <div className="my-4 mx-4 w-full flex flex-col md:flex-row  justify-between mr-10 items-center bg-gray-200">
+      <div className={mode==="light"?"my-4 r mx-4 w-full flex flex-col md:flex-row  justify-between mr-10 items-center bg-gray-200":"my-4 mx-4 w-full  flex flex-col md:flex-row text-white  justify-between mr-10 items-center bg-gray-800"}>
         <div className=" w-[500px] h-[800px]">
           <img
             src={img}
@@ -197,8 +198,8 @@ function Product({ alert, showAlert }) {
               {total !== 0 ? averageRating : "No ratings"}
               <StarIcon className="h-4  text-yellow-600 w-4" />
             </div>
-            <span className="text-gray-700">|</span>
-            <p className="text-xs  font-bold">{reviews.length} Reviews</p>
+            <span className="">|</span>
+            <p className="text-xs  font-bold">{reviews.length} {reviews.length === 1?"Review":"Reviews"}</p>
           </div>
 
           <p className="text-left text-sm my-4">{product.desc}</p>
@@ -237,7 +238,7 @@ function Product({ alert, showAlert }) {
               onChange={(e) => setsize(e.target.value)}
               name="size"
               id="size"
-              className="h-10 w-full outline-none border uppercase border-gray-900"
+              className={mode==="light"?"h-10 w-full outline-none border uppercase border-gray-900":"h-10 w-full outline-none border uppercase text-white bg-gray-800 border-gray-100"}
             >
               <option value={"m"}>M</option>
               <option value={"s"}>S</option>
@@ -267,7 +268,7 @@ function Product({ alert, showAlert }) {
                   id="quantity"
                   onChange={handleChange}
                   value={parseInt(quantity)}
-                  className="border select-none border-gray-400  py-1 text-center w-20 outline-none rounded-full"
+                  className={mode === "light"?"border select-none border-gray-700  py-1 text-center w-20 outline-none rounded-full":"border select-none border-gray-400  py-1 text-center w-20 text-black outline-none rounded-full"}
                 />
                 <p
                   className="text-xl select-none bg-gray-700 cursor-pointer text-white font-bold ring-1 ring-gray-700 py-1 px-3 rounded-full"
@@ -284,7 +285,7 @@ function Product({ alert, showAlert }) {
                 <CheckIcon className="h-8 w-8" />
                 <h1 className="font-bold ">In Stock.</h1>
               </div>
-              <p className="text-gray-600 text-sm  font-Lora">
+              <p className=" text-sm  font-Lora">
                 We don't know how much longer will this be on the stock.{" "}
               </p>
             </div>
@@ -294,7 +295,7 @@ function Product({ alert, showAlert }) {
                 <XIcon className="h-8 w-8" />
                 <h1 className="font-bold ">Temporarily out of stock.</h1>
               </div>
-              <p className="text-gray-600 text-sm  font-Lora">
+              <p className=" text-sm  font-Lora">
                 We don't know when or if this item will be back in stock.{" "}
               </p>
             </div>
@@ -313,7 +314,7 @@ function Product({ alert, showAlert }) {
 {userReview.length === 0?(
         <form className={ "w-[60%] ml-8 mb-4"} onSubmit={handleReviewSubmit}>
         <div className="flex flex-col space-y-2">
-          <label className="font-bold " htmlFor="comment">
+          <label className={mode==="light"?"font-bold text-black ":"font-bold text-white "} htmlFor="comment">
             Want to review the product?
           </label>
           <div className="my-3">
@@ -332,7 +333,7 @@ function Product({ alert, showAlert }) {
             onChange={(e) => setreviewInputValue(e.target.value)}
             className={
               rating !== 0
-                ? "border-2 text-sm rounded-lg pl-2 outline-none"
+                ? mode==="light"?"border-2 bg-gray-200 border-gray-300 mb-3 text-black text-sm rounded-lg p-2 outline-none":"border text-sm bg-gray-800 text-white mb-3  rounded-lg p-2 outline-none"
                 : "hidden"
             }
             rows={4}
@@ -346,8 +347,8 @@ function Product({ alert, showAlert }) {
           disabled={reviewInputValue === ""}
           className={
             reviewInputValue === ""
-              ? "cursor-not-allowed border-2 h-10 hover:text-white hover:bg-black text-center border-black  select-none text-sm   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all"
-              : "border-2 border-black h-10  select-none text-sm hover:text-white hover:bg-black   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all"
+              ? mode==="light"?"cursor-not-allowed border-2 h-10 hover:text-white hover:bg-black text-center border-black  select-none text-sm   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all":"cursor-not-allowed border-2 h-10 hover:text-gray-800 hover:bg-white text-center border-black  select-none text-sm   text-gray-200 font-mono rounded-lg p-2 mt-2  transition-all"
+              :mode==="light"? "border-2 border-black h-10  select-none text-sm hover:text-white hover:bg-black   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all":"border-2 border-gray-200 h-10  select-none text-sm hover:text-black hover:bg-white   text-gray-200 font-mono rounded-lg p-2 mt-2  transition-all"
           }
           type="submit"
         >

@@ -7,6 +7,7 @@ import {Offcanvas} from 'react-bootstrap'
 
 function Reviews({ reviews, setrunUseEffect, runUseEffect, showAlert, heading }) {
   const user = useSelector((state)=>state.user.currentUser)
+  const mode  = useSelector(state => state.theme.theme)
 const handleDeleteReview = async(id) => {
   try {
     await userRequest.delete(`/reviews/${id}`)
@@ -66,8 +67,8 @@ const handleEditReviewSubmit = async(e) => {
   
   return (
     <>
-    <div id="#componentToScrollTo" className="flex flex-col  justify-center items-center font-Lora">
-      <h1 className="m-4  font-bold text-2xl text-yellow-600 border-b-2 border-yellow-600 ">
+    <div id="#componentToScrollTo" className={mode==="light"?"flex flex-col  justify-center my-6 items-center font-Lora":"flex flex-col text-white bg-gray-800  justify-center items-center font-Lora"}>
+      <h1 className="m-4  font-bold text-2xl text-yellow-600 border-b-2 my-6 border-yellow-600 ">
        {heading}
       </h1>
       {reviews.slice(0,sliceNumber).map((r) => (
@@ -83,9 +84,9 @@ const handleEditReviewSubmit = async(e) => {
               alt=""
             />
 
-            <h1 className="font-bold text-sm  text-gray-900 select-none">{r.postedBy.username}</h1>
+            <h1 className="font-bold text-sm   select-none">{r.postedBy.username}</h1>
           </div>
-          <p className="text-gray-700 w-full  md:w-[60%]  h-auto mx-4 mt-2  text-sm text-justify">{r.review}</p>
+          <p className=" w-full  md:w-[60%]  h-auto mx-4 mt-2  text-sm text-justify">{r.review}</p>
 
           <div className="flex flex-col w-72 pr-2  items-center justify-between mt-2 ">
            <div className="flex items-center w-full space-x-3 justify-evenly">
@@ -98,7 +99,7 @@ const handleEditReviewSubmit = async(e) => {
             starSpacing="2px"
       />
             </span>
-          <p className=" text-gray-500 select-none mb-3 font-bold text-xs">
+          <p className=" select-none mb-3 font-bold text-xs">
             {moment(r.createdAt).format("LL")}
           </p>
            </div>
@@ -140,7 +141,7 @@ const handleEditReviewSubmit = async(e) => {
           </form>
         </Offcanvas.Body>
       </Offcanvas>
-    {sliceNumber > 5 && sliceNumber >= reviews.length?(<p  onClick={handleLessReviews} className={ `text-blue-600 underline cursor-pointer text-sm font-Lora my-3 mx-3 select-none hover:text-blue-700`}>see less reviews</p>):(<p onClick={handleMoreReviews} className={ reviews.length > 5? `text-blue-600 hover:text-blue-800 underline cursor-pointer text-sm font-Lora my-3 mx-3 select-none`:"hidden"}>see more reviews</p>)}
+    {sliceNumber > 5 && sliceNumber >= reviews.length?(<p  onClick={handleLessReviews} className={ `text-blue-500 underline cursor-pointer text-sm font-Lora my-3 mx-3 select-none hover:text-blue-600`}>see less reviews</p>):(<p onClick={handleMoreReviews} className={ reviews.length > 5? `text-blue-500 hover:text-blue-600 underline cursor-pointer text-sm font-Lora my-3 mx-3 select-none`:"hidden"}>see more reviews</p>)}
     </>
   );
 }
