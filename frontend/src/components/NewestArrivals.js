@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { publicRequest } from "../requestMethods";
 import NewProductItem from "./NewProductItem";
-import { Spinner } from "react-bootstrap";
+
 
 function NewestArrivals() {
   const [newProducts, setNewProducts] = useState([]);

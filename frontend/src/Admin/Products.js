@@ -6,7 +6,7 @@ function Products() {
   const [products, setproducts] = useState([]);
   const [query, setQuery] = useState("")
   const [categories, setCategories] = useState("")
-  const [priceSort, setpriceSort] = useState("")
+  const [priceSort, setpriceSort] = useState("asc")
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -29,6 +29,9 @@ function Products() {
     };
     fetchProducts();
   }, [query, categories]);
+
+
+
 
 
 useEffect(() => {
@@ -99,7 +102,7 @@ useEffect(() => {
             <option value="men">Men</option>
             <option value="women">Women</option>
             <option value="shoes">Shoes</option>
-            <option value="ocassion">Ocassional</option>
+            <option value="sports">Sports</option>
         </select>
 
 

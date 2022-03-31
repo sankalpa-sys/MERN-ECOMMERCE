@@ -185,7 +185,7 @@ function AddProduct() {
 
         <button
           type="submit"
-          className="bg-gradient-to-r  from-green-500 to-blue-500 h-10  rounded-full pr-1 w-20 ml-3 flex items-center justify-center mt-3 shadow-xl shadow-gray-500/50 hover:scale-105 active:scale-90 transform transition duration-300 ease-out"
+          className="bg-gradient-to-r  from-green-600 to-green-800 h-10  rounded-full pr-1 w-20 ml-3 flex items-center justify-center mt-3 shadow-xl shadow-green-500/50 hover:scale-105 active:scale-90 transform transition duration-300 ease-out"
         >
           Add
         </button>

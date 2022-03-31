@@ -52,7 +52,7 @@ function Cart({alert, showAlert}) {
 
    const handleEmptyClick = () => {
       dispatch(emptyCart())
-      showAlert("Cart Emptied!!", "success", "success")
+      showAlert("Cart emptied", "success", "Success")
 
    }
 
@@ -167,7 +167,7 @@ function Cart({alert, showAlert}) {
               token={onToken}
               stripeKey={KEY}
             >
-              <button className="bg-gray-900 border-1 border-red-600 text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
+              <button className="bg-gray-900  shadow-xl border-red-600  hover:shadow-red-600/50 border-1  text-white w-1/2 p-2 mt-4 hover:scale-105 transform transition duration-300 ease-out">
                 CHECKOUT NOW
               </button>
             </StripeCheckout>

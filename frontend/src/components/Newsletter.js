@@ -9,18 +9,12 @@ function Newsletter({showAlert}) {
         e.preventDefault()
         try {
             await publicRequest.post('/newsletter', {email: email})
-            showAlert( "You have subscribed to our Newsletter", "success", "Congrats!")
-            window.scrollTo({
-                top: 0,
-                behavior : "smooth"
-              })
+            showAlert( "You have subscribed to our Newsletter", "success", "Congrats")
+            
               setemail("")
         } catch (error) {
             showAlert( "Email already provided", "danger", "Error")
-            window.scrollTo({
-                top: 0,
-                behavior : "smooth"
-              })
+            
         }
     }
     return (

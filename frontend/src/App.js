@@ -18,6 +18,7 @@ import Admin from '../src/Admin/Admin';
 import EditProducts from './Admin/EditProducts';
 import React, {useState} from 'react'
 import AddProduct from './Admin/AddProduct';
+import Alert from './components/Alert';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
     })
     setTimeout(() => {
       setalert(null)
-    }, 2000);
+    }, 5000);
   }
 
   
@@ -52,6 +53,7 @@ function App() {
        
        <Route path='/admin'element={user !== null && user.isAdmin===true ? <Admin/>: <Home/>}/>
      </Routes>
+     <Alert alert={alert} showAlert={showAlert}/>
    </Router>
   );
 }

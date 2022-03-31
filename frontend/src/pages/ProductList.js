@@ -43,7 +43,9 @@ function ProductList({showAlert, alert}) {
             <option value="red">Red</option>
             <option value="blue">Blue</option>
             <option value="yellow">Yellow</option>
-            <option value="green">Green</option>
+            <option value="navy">Navy</option>
+            <option value="goldenrod">Golden Rod</option>
+            <option value="darkblue">Dark Blue</option>
           </select>
 
           <select name="size" id="" className="w-1/3 h-10 outline-none border border-gray-900" onChange={handleFilters}>

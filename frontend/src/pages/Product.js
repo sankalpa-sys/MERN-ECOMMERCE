@@ -9,16 +9,15 @@ import { publicRequest, userRequest } from "../requestMethods";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckIcon } from "@heroicons/react/outline";
 import Alert from "../components/Alert";
-import { XIcon } from "@heroicons/react/solid";
+import { XIcon, StarIcon } from "@heroicons/react/solid";
 import Reviews from "../components/Reviews";
+import StarRatings from "react-star-ratings";
+
 
 // Single Product Page
 
 function Product({ alert, showAlert }) {
-
-
   const user = useSelector((state) => state.user.currentUser);
-  
 
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -31,36 +30,38 @@ function Product({ alert, showAlert }) {
   const [reviews, setreviews] = useState([]);
   const [reviewInputValue, setreviewInputValue] = useState("");
   const [runUseEffect, setrunUseEffect] = useState(1);
-  const [categories, setcategories] = useState([])
+  const [categories, setcategories] = useState([]);
 
-  const [img, setimg] = useState("")
-  const [colorArr, setcolorArr] = useState([])
-  const [imgArr, setimgArr] = useState([])
-
+  const [img, setimg] = useState("");
+  const [colorArr, setcolorArr] = useState([]);
+  const [imgArr, setimgArr] = useState([]);
+  const [rating, setRating] = useState(0);
+  const [userReview, setuserReview] = useState([]);
 
   const dispatch = useDispatch();
-
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     try {
-      if(user!==null){
+      if (user !== null) {
         await userRequest.post("/reviews", {
           postedBy: user._id,
           productId: id,
           review: reviewInputValue,
+          starRating: rating,
         });
         setrunUseEffect(runUseEffect + 1);
+        showAlert("Review added.", "success", "Success");
         setreviewInputValue("");
-      }else{
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        showAlert("You have to Login first", "danger", "Failed");
+        setRating(0);
+      } else {
+        showAlert("You have to login first.", "danger", "Error");
+        setreviewInputValue("");
       }
     } catch (error) {
       console.log(error);
+      showAlert("You have already reviewed the product", "danger", "Error");
+      setreviewInputValue("");
     }
   };
 
@@ -71,7 +72,7 @@ function Product({ alert, showAlert }) {
     };
 
     getReviews();
-  }, [runUseEffect]);
+  }, [runUseEffect, id]);
 
   useEffect(() => {
     const scrollToTop = () => {
@@ -86,10 +87,10 @@ function Product({ alert, showAlert }) {
         setproduct(res.data);
         setinStock(res.data.inStock);
         setcolor(res.data.color);
-        setimg(res.data.img)
-        setcolorArr(res.data.colorArr)
-        setimgArr(res.data.imgArr)
-        setcategories(res.data.categories)
+        setimg(res.data.img);
+        setcolorArr(res.data.colorArr);
+        setimgArr(res.data.imgArr);
+        setcategories(res.data.categories);
       } catch (err) {
         console.log(err);
       }
@@ -97,32 +98,28 @@ function Product({ alert, showAlert }) {
     scrollToTop();
     getProduct();
   }, [id]);
-  const imgColorArr = colorArr.map((color, index)=>{
-    return{
-        color: color,
-        image: imgArr[index]
-    }
-})
+  const imgColorArr = colorArr.map((color, index) => {
+    return {
+      color: color,
+      image: imgArr[index],
+    };
+  });
 
-
-
-useEffect(() => {
-
-  imgColorArr.map((d)=>{
-      if(d.color === color){
-          setimg(d.image)
+  useEffect(() => {
+    imgColorArr.map((d) => {
+      if (d.color === color) {
+        setimg(d.image);
       }
-  })
-}, [color])
+    });
+  }, [color]);
 
-
-useEffect(() => {
-imgColorArr.map((m)=>{
-   if(product.img === m.image){
-       setcolor(m.color)
-   }
-})
-}, [])
+  useEffect(() => {
+    imgColorArr.map((m) => {
+      if (product.img === m.image) {
+        setcolor(m.color);
+      }
+    });
+  }, [id]);
 
   const handleChange = (e) => {
     setquantity(e.target.value);
@@ -131,39 +128,57 @@ imgColorArr.map((m)=>{
   const handleClick = () => {
     try {
       if (user === null) {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        showAlert("You have to Login first", "danger", "Failed");
+        showAlert("You have to login first.", "danger", "Error");
         return;
       } else {
-        dispatch(addProduct({ ...product, quantity, color, size,img }));
+        dispatch(addProduct({ ...product, quantity, color, size, img }));
         setquantity(1);
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        showAlert("Item Added to Cart", "success", "success");
+
+        showAlert("Item Added to cart.", "success", "Success");
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  const changeRating = (rate) => {
+    setRating(rate);
+  };
+
+  const total = reviews.reduce((tot, item) => tot + item.starRating, 0);
+  const averageRating = (total / reviews.length).toFixed(1);
+
+  // get single review
+
+  useEffect(() => {
+    const getReview = async () => {
+      const res = await userRequest.get(
+        `/reviews/userreview/${id}/${user._id}`
+      );
+      setuserReview(res.data);
+    };
+    getReview();
+    console.log(userReview);
+  }, [runUseEffect]);
+
+
+ 
 
   
-
   return (
     <div className="overflow-hidden">
       <Navbar />
       <Announcement />
-      <Alert alert={alert} />
+
       <div className="my-4 mx-4 w-full flex flex-col md:flex-row  justify-between mr-10 items-center bg-gray-200">
         <div className=" w-[500px] h-[800px]">
           <img
             src={img}
-            className={categories.includes("shoes")? "w-full h-full object-contain":"w-full h-full object-cover object-top"}
+            className={
+              categories.includes("shoes")
+                ? "w-full select-none h-full object-contain"
+                : "w-full select-none h-full object-cover object-top"
+            }
             alt=""
           />
         </div>
@@ -171,6 +186,20 @@ imgColorArr.map((m)=>{
 
         <div className="flex flex-col ml-10 justify-center items-start h-screen w-1/2 mr-20">
           <h1 className="text-4xl font-mono my-4 font-bold">{product.title}</h1>
+          <div className="flex  w-48 justify-evenly items-center select-none">
+            <div
+              className={
+                total !== 0
+                  ? "flex  w-12 items-center   text-xs font-bold"
+                  : "flex  w-20 items-center   text-xs font-bold"
+              }
+            >
+              {total !== 0 ? averageRating : "No ratings"}
+              <StarIcon className="h-4  text-yellow-600 w-4" />
+            </div>
+            <span className="text-gray-700">|</span>
+            <p className="text-xs  font-bold">{reviews.length} Reviews</p>
+          </div>
 
           <p className="text-left text-sm my-4">{product.desc}</p>
 
@@ -182,9 +211,23 @@ imgColorArr.map((m)=>{
             </label>
 
             <div className=" flex-grow md:flex-grow-0 flex items-center space-x-1">
-            {colorArr.length!==0?colorArr.map((m)=>(
-                        <p onMouseOver={()=>setcolor(m)}  key={m} style={{backgroundColor:m}} className={`h-6 rounded-full cursor-pointer  mx-4 w-6 `}> </p>
-                    )):(<p style={{backgroundColor:color}} className="h-6 rounded-full cursor-default w-6 mx-4"></p>)}
+              {colorArr.length !== 0 ? (
+                colorArr.map((m) => (
+                  <p
+                    onMouseOver={() => setcolor(m)}
+                    key={m}
+                    style={{ backgroundColor: m }}
+                    className={`h-6 rounded-full cursor-pointer  mx-4 w-6 `}
+                  >
+                    {" "}
+                  </p>
+                ))
+              ) : (
+                <p
+                  style={{ backgroundColor: color }}
+                  className="h-6 rounded-full cursor-default w-6 mx-4"
+                ></p>
+              )}
             </div>
 
             <label className=" font-semibold" htmlFor="size">
@@ -203,7 +246,6 @@ imgColorArr.map((m)=>{
               <option value={"xl"}>XL</option>
             </select>
           </div>
-          
 
           <div className="flex  items-center space-x-24 w-full ml-2 my-6">
             <div className="flex md:flex-row flex-col space-y-3 items-center space-x-3">
@@ -267,15 +309,32 @@ imgColorArr.map((m)=>{
           )}
         </div>
       </div>
-      <form className="w-[60%] ml-8 mb-4" onSubmit={handleReviewSubmit}>
+
+{userReview.length === 0?(
+        <form className={ "w-[60%] ml-8 mb-4"} onSubmit={handleReviewSubmit}>
         <div className="flex flex-col space-y-2">
           <label className="font-bold " htmlFor="comment">
             Want to review the product?
           </label>
+          <div className="my-3">
+            <StarRatings
+              rating={rating}
+              starRatedColor="goldenrod"
+              starHoverColor="goldenrod"
+              changeRating={changeRating}
+              numberOfStars={5}
+              starDimension="30px"
+              name="rating"
+            />
+          </div>
           <textarea
             value={reviewInputValue}
             onChange={(e) => setreviewInputValue(e.target.value)}
-            className="border-2 rounded-lg pl-2 outline-none"
+            className={
+              rating !== 0
+                ? "border-2 text-sm rounded-lg pl-2 outline-none"
+                : "hidden"
+            }
             rows={4}
             type="text"
             placeholder="Your review here.."
@@ -284,13 +343,33 @@ imgColorArr.map((m)=>{
           />
         </div>
         <button
-          className="border bg-gradient-to-r from-cyan-500 hover:from-teal-500 to-blue-500 hover:to-green-500 text-white font-mono rounded-full p-2 mt-2"
+          disabled={reviewInputValue === ""}
+          className={
+            reviewInputValue === ""
+              ? "cursor-not-allowed border-2 h-10 hover:text-white hover:bg-black text-center border-black  select-none text-sm   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all"
+              : "border-2 border-black h-10  select-none text-sm hover:text-white hover:bg-black   text-gray-800 font-mono rounded-lg p-2 mt-2  transition-all"
+          }
           type="submit"
         >
           Submit
         </button>
       </form>
-      <Reviews reviews={reviews} runUseEffect={runUseEffect} setrunUseEffect= {setrunUseEffect} />
+):  <Reviews
+heading={`Your Review`}
+reviews={userReview}
+runUseEffect={runUseEffect}
+setrunUseEffect={setrunUseEffect}
+showAlert={showAlert}
+/>}
+
+      <Reviews
+        heading={`Customer Reviews (${reviews.length})`}
+        reviews={reviews}
+        runUseEffect={runUseEffect}
+        setrunUseEffect={setrunUseEffect}
+        showAlert={showAlert}
+      />
+      <Alert alert={alert} />
       <Newsletter alert={alert} showAlert={showAlert} />
       <Footer />
     </div>

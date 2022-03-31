@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/userSlice";
 import { publicRequest } from "../requestMethods";
 
+
 function Navbar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -29,8 +30,9 @@ function Navbar() {
   const filteredProducts = products.filter((m)=>{
     return m.title.toLowerCase().includes(inputValue.toLowerCase())
   })
-
-  console.log(filteredProducts);
+  const hanleProductClick = () => {
+    setinputValue("")
+  }
   
 
   return (
@@ -42,9 +44,9 @@ function Navbar() {
           <SearchIcon className=" w-7 mr-2 h-7 cursor-pointer  p-1 " />
         </div>
       </div>
-      <div className={filteredProducts.length === 0 || inputValue === ""?"hidden":`absolute left-[50px] h-auto top-[50px] rounded-lg p-4 bg-gray-300 w-96 flex flex-col space-y-2 text-xs font-Lora`}>
+      <div className={filteredProducts.length === 0 || inputValue === ""?"hidden":`absolute left-[50px] h-auto top-[50px] rounded-lg p-4 bg-gray-300 w-96 flex flex-col space-y-2 text-sm font-xs`}>
         {filteredProducts.slice(0,7).map((m)=>(
-          <Link to={`/product/${m._id}`}><p className="cursor-pointer">{m.title}</p></Link>
+          <Link to={`/product/${m._id}`}><p key={m._id} onClick={hanleProductClick} className="cursor-pointer transition-all ease-out duration-200  hover:bg-yellow-600 hover:text-white py-2 px-2">{m.title}</p></Link>
         ))}
       </div>
 
@@ -66,7 +68,7 @@ function Navbar() {
         
        <Link to='/cart'><div hidden={user===null} className="flex relative">
           <ShoppingCartIcon className=" h-6 w-6 hover:text-cyan-700 text-gray-700" />
-        <p className="absolute bottom-4 left-4 bg-red-500 w-full text-center text-white overflow-hidden mr-2 rounded-full mt-1">{quantity}</p>
+        <p className="absolute bottom-4 animate-pulse left-4 bg-red-600 w-full text-center text-white overflow-hidden mr-2 rounded-full mt-1">{quantity}</p>
        </div></Link>
       </div>
     </div>
