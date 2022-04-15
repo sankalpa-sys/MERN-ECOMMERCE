@@ -90,7 +90,7 @@ function Cart({ alert, showAlert }) {
   const totalPrice = userCartProducts.length !== 0?totalPriceArr.reduce((a,b)=>{
     return (a + b)
   }):""
-  console.log(totalPrice)
+
 
 
 

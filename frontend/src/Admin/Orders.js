@@ -7,6 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import {ExclamationIcon, CheckIcon} from "@heroicons/react/outline"
 
 function Orders() {
   const [status, setstatus] = useState("")
@@ -171,7 +172,13 @@ function Orders() {
               </td>
               <td className="px-6 py-4">
                 <p className={order.status==="pending"?"text-yellow-600 first-letter:uppercase":"text-green-600 first-letter:uppercase"}>
-                  {order.status}
+                  {order.status==="pending"?(<div className="flex space-x-1 items-center">
+                    <p>{order.status}</p>
+                    <ExclamationIcon className="h-6 w-6"/>
+                  </div>):(<div className="flex space-x-1 items-center">
+                    <p>{order.status}</p>
+                    <CheckIcon className="h-6 w-6" />
+                  </div>)}
                 </p>
               </td>
               <td className="px-6 py-4">
