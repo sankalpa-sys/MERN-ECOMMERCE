@@ -4,7 +4,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     currentUser: null,
-    isFetching: null,
+    isFetching: false,
     error: false,
   },
   reducers: {

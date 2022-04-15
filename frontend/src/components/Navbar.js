@@ -11,7 +11,7 @@ import Switch from '@mui/material/Switch';
 function Navbar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const quantity = useSelector(state=>state.cart.quantity)
+  const cart = useSelector(state=>state.cart)
   const user = useSelector(state=> state.user.currentUser)
   const mode  = useSelector(state => state.theme.theme)
   const handleLogOutClick = () => {
@@ -21,6 +21,7 @@ function Navbar() {
 
   const [inputValue, setinputValue] = useState("")
   const [products, setproducts] = useState([])
+  const [userCartProducts, setuserCartProducts] = useState([])
 
 
   useEffect(() => {
@@ -47,13 +48,28 @@ function Navbar() {
     }
   }
 
+
+  
+
+    // useEffect(() => {
+    //   const getProducts = cart.products.filter((f)=>{
+    //     return f.userId === user._id
+    //   })
+    //  if(user !== null){
+    //   setuserCartProducts(getProducts)
+    //  }
+    // }, [])
+    
+    
+  
+
   
 
   return (
     <div className={mode === "light"?"flex justify-between items-center w-screen h-14 text-gray-700 shadow-xl bg-gray-300 sticky top-0 z-50 ":"flex justify-between items-center w-screen h-14 text-gray-100 shadow-xl bg-gray-800 sticky top-0 z-50 "}>
-      <div className="flex  justify-between items-center space-x-4 ml-4">
+      <div className="hidden md:flex  justify-between items-center space-x-4 ml-4">
         <h5>EN</h5>
-        <div className="flex h-8  w-96 items-center space-x-2 border rounded-lg shadow-sm ">
+        <div className=" flex h-8  w-96 items-center space-x-2 border rounded-lg shadow-sm ">
           <input type="text" onChange={e=>setinputValue(e.target.value)} value={inputValue} className={mode==="light"?"relative rounded-lg outline-none pl-2 w-full h-full":"relative rounded-lg bg-gray-800 outline-none pl-2 w-full h-full"}  />
           <SearchIcon className=" w-7 mr-2 h-7 cursor-pointer  p-1 " />
         </div>
@@ -87,7 +103,7 @@ function Navbar() {
         
        <Link to='/cart'><div hidden={user===null} className="flex relative">
           <ShoppingCartIcon className=" h-6 w-6 hover:text-cyan-700 " />
-        <p className="absolute bottom-4 animate-pulse left-4 bg-red-600 w-full text-center text-white overflow-hidden mr-2 rounded-full mt-1">{quantity}</p>
+       {user && ( <p className="absolute bottom-4 animate-pulse left-4 bg-red-600 w-full text-center text-white overflow-hidden mr-2 rounded-full mt-1">{(cart.products.filter((f)=> f.userId === user._id)).length}</p>)}
        </div></Link>
       </div>
     </div>

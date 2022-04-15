@@ -8,6 +8,7 @@ const orderSchema = new mongoose.Schema({
             title: {type:String},
             color: {type:String},
             size: {type:String},
+            img: {type:String},
 
             quantity: {
                 type: Number, default:1

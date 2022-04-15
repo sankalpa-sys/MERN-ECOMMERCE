@@ -34,7 +34,7 @@ function App() {
     })
     setTimeout(() => {
       setalert(null)
-    }, 5000);
+    }, 3000);
   }
 
   

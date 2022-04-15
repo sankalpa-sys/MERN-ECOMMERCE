@@ -100,7 +100,7 @@ function UserList() {
             >
               <div className="flex items-center space-x-2 ">
                 <img
-                  className="h-8 w-8 rounded-full object-contain"
+                  className="h-8 w-8 rounded-full object-cover"
                   src={user.img ? user.img : noImage}
                   alt=""
                 />
@@ -125,7 +125,7 @@ function UserList() {
         </div>
       </div>
 
-      <div className={`h-full mb-20 ${display}  border-2 border-gray-600 w-1/2 md:w-1/4 md:absolute right-52 top-20  flex flex-col justify-center rounded-lg items-center space-y-2 shadow-xl shadow-gray-600/30`}>
+      <div className={`h-[500px] mb-20 ${display}  border-2 border-gray-600 w-1/2 md:w-1/4 md:absolute right-52 top-20  flex flex-col justify-center rounded-lg items-center space-y-2 shadow-xl shadow-gray-600/30`}>
         <h1 className="text-xl font-mono font-bold text-white mt-6 border-b-2 border-white">EDIT USER</h1>
 
         <form action="" onSubmit={handleEditSubmit} className="flex flex-col justify-center space-y-6 items-center w-full h-full">

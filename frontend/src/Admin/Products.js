@@ -84,7 +84,7 @@ useEffect(() => {
     <div className="p-2 font-Lora font-semibold">
       <h1 className="font-bold flex justify-between pr-8 pl-2 items-center  text-cyan-500  text-2xl mb-8">
         All Products({products.length})
-        <Link to='/add'><button className="h-12  hover:bg-yellow-400 rounded-lg font-bold bg-yellow-300 text-black text-base p-2 w-32">Add Product</button></Link>
+        <Link to='/add'><button className="h-12  hover:bg-yellow-500 rounded-lg font-bold bg-yellow-400 text-black text-base p-2 w-32">Add Product</button></Link>
       </h1>
 
       <div className="my-6 flex justify-start items-center space-x-4">

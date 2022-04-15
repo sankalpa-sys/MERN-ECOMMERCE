@@ -20,13 +20,13 @@ function Newsletter({showAlert}) {
         }
     }
     return (
-        <div className={mode==="light"? 'h-96 w-full bg-gray-200 shadow-sm flex justify-center items-center flex-col space-y-6':'h-96 w-full border-t bg-gray-800 shadow-sm text-white flex justify-center items-center flex-col space-y-6'}>
+        <div className={mode==="light"? 'h-96 w-full mt-4 bg-gray-200 shadow-sm flex justify-center items-center flex-col space-y-6':'h-96 mt-4 w-full  bg-gray-800 shadow-sm text-white flex justify-center items-center flex-col space-y-6'}>
             <h1 className='text-7xl font-serif'>Newsletter</h1>
 
             <p className='text-lg font-mono text-center'>Get timely updates of your favorite products</p>
 
             <form onSubmit={handleSubmit} className='flex w-1/2 rounded-l-lg h-10 items-center justify-center'>
-                <input type="email" value={email} onChange={e=>setemail(e.target.value)} placeholder='Your email' className={mode==="light"?'flex-grow h-full rounded-l-xl pl-2 outline-none ':'flex-grow text-gray-900 h-full rounded-l-xl pl-2 outline-none '}/>
+                <input type="email" value={email} onChange={e=>setemail(e.target.value)} placeholder='Your email' className={mode==="light"?'flex-grow h-full rounded-l-xl pl-2 outline-none w-screen ':'flex-grow text-gray-900 h-full rounded-l-xl pl-2 outline-none '}/>
                 <button type='submit'><PaperAirplaneIcon className='h-10 w-10 p-1 rotate-90 bg-green-700 text-gray-200 rounded-t-lg cursor-pointer '/></button>
             </form>
         </div>

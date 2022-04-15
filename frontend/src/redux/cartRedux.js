@@ -6,6 +6,7 @@ const cartSlice = createSlice({
     products: [],
     quantity: 0,
     total: 0,
+    userId: null,
 
   },
   reducers: {
@@ -13,6 +14,7 @@ const cartSlice = createSlice({
       state.quantity += 1;
       state.products.push(action.payload);
       state.total += action.payload.price*action.payload.quantity;
+      state.userId = action.payload.userId
     },
 
     emptyCart: (state) => {
@@ -21,9 +23,16 @@ const cartSlice = createSlice({
       state.total = 0
     },
     removefromCart: (state, action) => {
-      const newProductArr = state.products.filter((product) => {
-        return product._id !== action.payload._id
-      })
+
+
+      // Important
+
+      const index  = state.products.findIndex((f)=>{ return f._id === action.payload.id && f.userId === action.payload.userId})
+      const newProductArr = [
+        ...state.products.slice(0, index),
+        ...state.products.slice(index + 1)
+      ]
+
       state.products = newProductArr
       state.quantity -= 1;
       state.total -= action.payload.price*action.payload.quantity
